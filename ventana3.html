@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ventana 3 – Consulta Médica y Diagnóstico</title>
+<style>
+:root {
+  --bg: #f3f6f7;
+  --card: #fff;
+  --ink: #16292d;
+  --mut: #5a6d72;
+  --pri: #0f5c63;
+  --pri2: #e0f0f1;
+  --line: #cfdadd;
+  --err: #b3261e;
+  --ok: #1b6e3c;
+  --shadow: 0 4px 12px rgba(15, 92, 99, 0.08);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 "Segoe UI", Roboto, Arial, sans-serif;
+}
+header, main {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+h1 { font-size: 1.7rem; margin: 0 0 4px; color: var(--pri); }
+p.sub { color: var(--mut); margin: 0 0 16px; }
+.nav-back {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--pri);
+  text-decoration: none;
+  font-weight: 600;
+}
+.win {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.bar {
+  background: var(--pri);
+  color: #fff;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  font-size: .9rem;
+  font-weight: 600;
+}
+.body { padding: 24px; }
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 0 0 20px;
+  padding: 16px;
+}
+legend {
+  font-weight: 700;
+  color: var(--pri);
+  padding: 0 8px;
+  font-size: 1rem;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 14px;
+}
+label {
+  display: block;
+  font-size: .85rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #8aa0a5;
+  border-radius: 4px;
+  font: inherit;
+  background: #fff;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 3px solid #f2b705;
+  outline-offset: 1px;
+}
+input[readonly] { background: var(--pri2); font-weight: bold; color: var(--pri); }
+.hint { font-size: .78rem; color: var(--mut); margin-top: 3px; }
+.btns {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+button {
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: 2px solid var(--pri);
+  background: var(--pri);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+button.sec { background: #fff; color: var(--pri); }
+button:hover { opacity: 0.92; }
+.msg { margin-top: 12px; font-weight: 600; font-size: 0.9rem; }
+.bad { color: var(--err); }
+.good { color: var(--ok); }
+.info-box {
+  background: var(--pri2);
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--pri);
+}
+/* Estilos unificados para el Encabezado Institucional */
+.header-institucional {
+  background: #ffffff;
+  border-bottom: 3px solid #0f5c63;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(15, 92, 99, 0.08);
+}
+.header-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.header-logo-container img {
+  height: 55px; /* Ajusta el tamaño de tu logo.png */
+  width: auto;
+}
+.header-titles h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #0f5c63;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.header-titles p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: #5a6d72;
+}
+.header-right {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #5a6d72;
+}
+</style>
+</head>
+<body>
+  <header class="header-institucional">
+  <div class="header-logo-container">
+    <!-- Asegúrate de que el archivo se llame logo.png en tu carpeta -->
+    <img src="logo.png" alt="Logo Institucional MINSA / SURCO">
+    <div class="header-titles">
+      <h2>REPÚBLICA DE PANAMÁ – MINISTERIO DE SALUD</h2>
+      <p>Sistema Único de Referencia y Contrarreferencia (SURCO)</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <span>Módulo Clínico Oficial</span><br>
+    <strong style="color: #0f5c63;">Panamá, 2026</strong>
+  </div>
+</header>
+
+<header>
+  <a class="nav-back" href="index.html">← Volver al Menú Principal</a>
+  <h1>Ventana 3 – Módulo de Consulta y Diagnóstico Clínico</h1>
+  <p class="sub">Revisión de historial del paciente, selección de servicio, signos vitales y prescripción.</p>
+</header>
+
+<main>
+<div class="win">
+  <div class="bar">
+    <span>Consultorio Médico - Área de Evaluación</span>
+    <span>Dr(a). En Turno</span>
+  </div>
+  <div class="body">
+    
+    <form id="form-consulta">
+      
+      <!-- 1. HISTORIAL Y DATOS DEL PACIENTE (Arriba de la evaluación) -->
+      <fieldset>
+        <legend>1. Historial e Información Demográfica del Paciente</legend>
+        <div class="grid">
+          <div>
+            <label for="expediente-activo">N.º de Expediente</label>
+            <input type="text" id="expediente-activo" readonly>
+          </div>
+          <div>
+            <label for="nombre-paciente">Nombre Completo</label>
+            <input type="text" id="nombre-paciente" readonly>
+          </div>
+        </div>
+        <div class="grid">
+          <div>
+            <label for="cedula-paciente">Cédula</label>
+            <input type="text" id="cedula-paciente" readonly>
+          </div>
+          <div>
+            <label for="ubicacion-paciente">Residencia (Distrito / Corregimiento)</label>
+            <input type="text" id="ubicacion-paciente" readonly>
+          </div>
+        </div>
+        <div>
+          <label for="alergias-paciente">Alergias / Antecedentes Registrados</label>
+          <input type="text" id="alergias-paciente" readonly style="background: #fff3cd; color: #856404; font-weight: bold;">
+        </div>
+      </fieldset>
+
+      <!-- 2. CLASIFICACIÓN DEL SERVICIO Y TIPO DE INGRESO -->
+      <fieldset>
+        <legend>2. Clasificación del Servicio Médico</legend>
+        <div class="grid">
+          <div>
+            <label for="servicio-medico">Servicio Médico Especializado *</label>
+            <input type="text" id="servicio-medico" required placeholder="Ej.: Neurología, Cardiología, Medicina General...">
+            <div class="hint">Escriba el servicio o especialidad tratante</div>
+          </div>
+          <div>
+            <label for="tipo-ingreso">Tipo de Ingreso / Servicio Emisor *</label>
+            <select id="tipo-ingreso" required>
+              <option value="">Seleccione tipo...</option>
+              <option value="Consulta Externa">Consulta Externa</option>
+              <option value="Urgencias">Urgencias</option>
+              <option value="Hospitalización">Hospitalización</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 3. SIGNOS VITALES -->
+      <fieldset>
+        <legend>3. Signos Vitales y Antropometría</legend>
+        <div class="grid">
+          <div>
+            <label for="pa">Presión Arterial (mmHg) *</label>
+            <input type="text" id="pa" required placeholder="Ej.: 120/80">
+          </div>
+          <div>
+            <label for="fc">Frecuencia Cardíaca (lpm) *</label>
+            <input type="number" id="fc" required placeholder="Ej.: 75">
+          </div>
+          <div>
+            <label for="temp">Temperatura (°C) *</label>
+            <input type="number" step="0.1" id="temp" required placeholder="Ej.: 36.5">
+          </div>
+        </div>
+        <div class="grid">
+          <div>
+            <label for="peso">Peso (kg) *</label>
+            <input type="number" step="0.1" id="peso" required placeholder="Ej.: 70.5">
+          </div>
+          <div>
+            <label for="talla">Talla (cm) *</label>
+            <input type="number" id="talla" required placeholder="Ej.: 170">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 4. DIAGNÓSTICO Y TRATAMIENTO -->
+      <fieldset>
+        <legend>4. Evaluación Médica y Prescripción</legend>
+        <div style="margin-bottom: 14px;">
+          <label for="sintomas">Motivo de Consulta y Nota de Evolución *</label>
+          <textarea id="sintomas" rows="3" required placeholder="Describa los síntomas y hallazgos..."></textarea>
+        </div>
+        <div class="grid">
+          <div>
+            <label for="diagnostico">Diagnóstico Clínico *</label>
+            <input type="text" id="diagnostico" required placeholder="Ej.: Migraña crónica">
+          </div>
+          <div>
+            <label for="cie10">Código CIE-10</label>
+            <input type="text" id="cie10" placeholder="Ej.: G43.9">
+          </div>
+        </div>
+        <div>
+          <label for="receta">Tratamiento / Receta Médica *</label>
+          <textarea id="receta" rows="3" required placeholder="Medicamentos, dosis y recomendaciones..."></textarea>
+        </div>
+      </fieldset>
+
+      <div id="resultado-consulta" class="msg"></div>
+
+      <div class="btns">
+        <button type="submit" id="btn-guardar-consulta">Guardar Consulta</button>
+        <button type="button" class="sec" id="btn-imprimir" disabled>Imprimir Receta</button>
+        <button type="button" class="sec" id="btn-siguiente">Finalizar y Siguiente Paciente</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+</main>
+
+<script>
+// Obtener el expediente por URL
+const params = new URLSearchParams(window.location.search);
+const expParam = params.get('expediente');
+
+const inputExpediente = document.getElementById('expediente-activo');
+const inputNombre = document.getElementById('nombre-paciente');
+const inputCedula = document.getElementById('cedula-paciente');
+const inputUbicacion = document.getElementById('ubicacion-paciente');
+const inputAlergias = document.getElementById('alergias-paciente');
+
+const resultadoConsulta = document.getElementById('resultado-consulta');
+const btnImprimir = document.getElementById('btn-imprimir');
+const formConsulta = document.getElementById('form-consulta');
+
+if (expParam) {
+  inputExpediente.value = expParam;
+  // Buscar en localStorage el historial y datos del paciente
+  const listaLocal = JSON.parse(localStorage.getItem('pacientes_consultorio') || '[]');
+  const pac = listaLocal.find(p => p.expediente === expParam);
+  if (pac) {
+    inputNombre.value = pac.nombre;
+    inputCedula.value = pac.cedula;
+    inputUbicacion.value = `${pac.distrito || 'N/D'} / ${pac.corregimiento || 'N/D'}`;
+    inputAlergias.value = pac.alergias ? pac.alergias : "Sin alergias registradas";
+  } else {
+    inputNombre.value = "Paciente General";
+    inputCedula.value = "N/D";
+    inputUbicacion.value = "N/D";
+    inputAlergias.value = "Ninguna";
+  }
+} else {
+  inputExpediente.value = "EXP-GENERAL";
+  inputNombre.value = "Sin asignar";
+  inputCedula.value = "N/D";
+  inputUbicacion.value = "N/D";
+  inputAlergias.value = "Ninguna";
+}
+
+// Guardar consulta
+formConsulta.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const datosConsulta = {
+    expediente: inputExpediente.value,
+    fecha_consulta: new Date().toISOString(),
+    servicio_medico: document.getElementById('servicio-medico').value.trim(),
+    tipo_ingreso: document.getElementById('tipo-ingreso').value,
+    presion_arterial: document.getElementById('pa').value,
+    frecuencia_cardiaca: document.getElementById('fc').value,
+    temperatura: document.getElementById('temp').value,
+    peso: document.getElementById('peso').value,
+    talla: document.getElementById('talla').value,
+    evolucion: document.getElementById('sintomas').value,
+    diagnostico: document.getElementById('diagnostico').value,
+    cie10: document.getElementById('cie10').value,
+    receta: document.getElementById('receta').value
+  };
+
+  let historial = JSON.parse(localStorage.getItem('historial_consultas') || '[]');
+  historial.push(datosConsulta);
+  localStorage.setItem('historial_consultas', JSON.stringify(historial));
+
+  resultadoConsulta.innerHTML = `<p class="good">¡Consulta del servicio de ${datosConsulta.servicio_medico} guardada con éxito!</p>`;
+  btnImprimir.removeAttribute('disabled');
+});
+
+btnImprimir.addEventListener('click', () => {
+  window.print();
+});
+
+document.getElementById('btn-siguiente').addEventListener('click', () => {
+  if (confirm("¿Desea finalizar y volver al menú principal?")) {
+    window.location.href = 'index.html';
+  }
+});
+</script>
+
+</body>
+</html>

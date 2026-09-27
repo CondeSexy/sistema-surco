@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ventana 2 – Registro de Nuevo Expediente</title>
+<style>
+:root {
+  --bg: #f3f6f7;
+  --card: #fff;
+  --ink: #16292d;
+  --mut: #5a6d72;
+  --pri: #0f5c63;
+  --pri2: #e0f0f1;
+  --line: #cfdadd;
+  --err: #b3261e;
+  --ok: #1b6e3c;
+  --shadow: 0 4px 12px rgba(15, 92, 99, 0.08);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 "Segoe UI", Roboto, Arial, sans-serif;
+}
+header, main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+h1 { font-size: 1.7rem; margin: 0 0 4px; color: var(--pri); }
+p.sub { color: var(--mut); margin: 0 0 16px; }
+.nav-back {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--pri);
+  text-decoration: none;
+  font-weight: 600;
+}
+.win {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.bar {
+  background: var(--pri);
+  color: #fff;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  font-size: .9rem;
+  font-weight: 600;
+}
+.body { padding: 24px; }
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 0 0 20px;
+  padding: 16px;
+}
+legend {
+  font-weight: 700;
+  color: var(--pri);
+  padding: 0 8px;
+  font-size: 1rem;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+label {
+  display: block;
+  font-size: .85rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #8aa0a5;
+  border-radius: 4px;
+  font: inherit;
+  background: #fff;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 3px solid #f2b705;
+  outline-offset: 1px;
+}
+input[readonly] { background: var(--pri2); }
+.hint { font-size: .78rem; color: var(--mut); margin-top: 3px; }
+.btns {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+button {
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: 2px solid var(--pri);
+  background: var(--pri);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+button.sec { background: #fff; color: var(--pri); }
+button:hover { opacity: 0.92; }
+.msg { margin-top: 12px; font-weight: 600; font-size: 0.9rem; }
+.bad { color: var(--err); }
+.good { color: var(--ok); }
+/* Estilos unificados para el Encabezado Institucional */
+.header-institucional {
+  background: #ffffff;
+  border-bottom: 3px solid #0f5c63;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(15, 92, 99, 0.08);
+}
+.header-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.header-logo-container img {
+  height: 55px; /* Ajusta el tamaño de tu logo.png */
+  width: auto;
+}
+.header-titles h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #0f5c63;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.header-titles p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: #5a6d72;
+}
+.header-right {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #5a6d72;
+}
+</style>
+</head>
+<body>
+
+  <header class="header-institucional">
+  <div class="header-logo-container">
+    <!-- Asegúrate de que el archivo se llame logo.png en tu carpeta -->
+    <img src="logo.png" alt="Logo Institucional MINSA / SURCO">
+    <div class="header-titles">
+      <h2>REPÚBLICA DE PANAMÁ – MINISTERIO DE SALUD</h2>
+      <p>Sistema Único de Referencia y Contrarreferencia (SURCO)</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <span>Módulo Clínico Oficial</span><br>
+    <strong style="color: #0f5c63;">Panamá, 2026</strong>
+  </div>
+</header>
+
+<header>
+  <a class="nav-back" href="index.html">← Volver al Menú Principal</a>
+  <h1>Ventana 2 – Registro de Nuevo Paciente</h1>
+  <p class="sub">Complete los datos demográficos y clínicos iniciales para generar el expediente.</p>
+</header>
+
+<main>
+<div class="win">
+  <div class="bar">
+    <span>Módulo de Creación de Expedientes</span>
+    <span>Estado: Nuevo Registro</span>
+  </div>
+  <div class="body">
+    
+    <form id="form-nuevo-expediente">
+      
+      <!-- Datos Generales -->
+      <fieldset>
+        <legend>Información Personal</legend>
+        <div class="grid">
+          <div>
+            <label for="expediente">N.º de Expediente (Generado)</label>
+            <input type="text" id="expediente" readonly>
+            <div class="hint">Asignado automáticamente por el sistema</div>
+          </div>
+          <div>
+            <label for="cedula">Cédula *</label>
+            <input type="text" id="cedula" required placeholder="Ej.: 8-123-456">
+          </div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <label for="nombre">Nombre completo *</label>
+            <input type="text" id="nombre" required placeholder="Ej.: Juan Pérez">
+          </div>
+          <div>
+            <label for="estado_civil">Estado Civil *</label>
+            <select id="estado_civil" required>
+              <option value="">Seleccione...</option>
+              <option value="Soltero/a">Soltero/a</option>
+              <option value="Casado/a">Casado/a</option>
+              <option value="Divorciado/a">Divorciado/a</option>
+              <option value="Viudo/a">Viudo/a</option>
+              <option value="Unión Libre">Unión Libre</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <label for="telefono">Teléfono de contacto *</label>
+            <input type="tel" id="telefono" required placeholder="Ej.: 6000-0000">
+          </div>
+          <div>
+            <label for="telefono_emergencia">Teléfono de Emergencia *</label>
+            <input type="tel" id="telefono_emergencia" required placeholder="Ej.: 6111-1111 (Familiar/Contacto)">
+          </div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <label for="correo">Correo Electrónico</label>
+            <input type="email" id="correo" placeholder="Ej.: correo@ejemplo.com">
+          </div>
+          <div>
+            <label for="seguro_social">N.º de Seguro Social</label>
+            <input type="text" id="seguro_social" placeholder="Opcional">
+          </div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <label for="tipo_sangre">Tipo de Sangre *</label>
+            <select id="tipo_sangre" required>
+              <option value="">Seleccione...</option>
+              <option value="O+">O Positivo (O+)</option>
+              <option value="O-">O Negativo (O-)</option>
+              <option value="A+">A Positivo (A+)</option>
+              <option value="A-">A Negativo (A-)</option>
+              <option value="B+">B Positivo (B+)</option>
+              <option value="B-">B Negativo (B-)</option>
+              <option value="AB+">AB Positivo (AB+)</option>
+              <option value="AB-">AB Negativo (AB-)</option>
+            </select>
+          </div>
+          <div>
+            <label for="fecha_nacimiento">Fecha de Nacimiento *</label>
+            <input type="date" id="fecha_nacimiento" required>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Ubicación y Residencia -->
+      <fieldset>
+        <legend>Ubicación y Domicilio</legend>
+        <div class="grid">
+          <div>
+            <label for="provincia">Provincia</label>
+            <input type="text" id="provincia" placeholder="Ej.: Panamá">
+          </div>
+          <div>
+            <label for="distrito">Distrito *</label>
+            <input type="text" id="distrito" required placeholder="Ej.: Panamá">
+          </div>
+        </div>
+        <div class="grid">
+          <div>
+            <label for="corregimiento">Corregimiento *</label>
+            <input type="text" id="corregimiento" required placeholder="Ej.: Betania">
+          </div>
+          <div>
+            <label for="direccion">Dirección Exacta *</label>
+            <input type="text" id="direccion" required placeholder="Calle, Edificio, Casa N.°">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Antecedentes de Alergias -->
+      <fieldset>
+        <legend>Antecedentes Médicos Básicos</legend>
+        <div>
+          <label for="alergias">Alergias o Condiciones Crónicas Relevantes</label>
+          <textarea id="alergias" rows="2" placeholder="Ej.: Alérgico a penicilina, hipertensión..."></textarea>
+        </div>
+      </fieldset>
+
+      <div id="resultado-guardado" class="msg"></div>
+
+      <div class="btns">
+        <button type="submit" id="btn-guardar">Guardar Expediente</button>
+        <button type="button" class="sec" id="btn-enviar-medico" disabled>Enviar a Consulta Médica</button>
+        <button type="button" class="sec" id="btn-limpiar">Limpiar Formulario</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+</main>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const anioActual = new Date().getFullYear();
+  const aleatorio = Math.floor(10000 + Math.random() * 90000);
+  document.getElementById('expediente').value = `EXP-${anioActual}-${aleatorio}`;
+});
+
+const form = document.getElementById('form-nuevo-expediente');
+const resultadoGuardado = document.getElementById('resultado-guardado');
+const btnEnviarMedico = document.getElementById('btn-enviar-medico');
+let expedienteGuardadoExitosamente = false;
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const datosPaciente = {
+    expediente: document.getElementById('expediente').value,
+    cedula: document.getElementById('cedula').value.trim(),
+    nombre: document.getElementById('nombre').value.trim(),
+    estado_civil: document.getElementById('estado_civil').value,
+    telefono: document.getElementById('telefono').value.trim(),
+    telefono_emergencia: document.getElementById('telefono_emergencia').value.trim(),
+    correo: document.getElementById('correo').value.trim(),
+    seguro_social: document.getElementById('seguro_social').value.trim(),
+    tipo_sangre: document.getElementById('tipo_sangre').value,
+    fecha_nacimiento: document.getElementById('fecha_nacimiento').value,
+    provincia: document.getElementById('provincia').value.trim(),
+    distrito: document.getElementById('distrito').value.trim(),
+    corregimiento: document.getElementById('corregimiento').value.trim(),
+    direccion: document.getElementById('direccion').value.trim(),
+    alergias: document.getElementById('alergias').value.trim(),
+    fecha_registro: new Date().toISOString()
+  };
+
+  // Guardar acumulativamente en localStorage sin sobrescribir a los anteriores
+  let listaPacientes = JSON.parse(localStorage.getItem('pacientes_consultorio') || '[]');
+  listaPacientes.push(datosPaciente);
+  localStorage.setItem('pacientes_consultorio', JSON.stringify(listaPacientes));
+
+  resultadoGuardado.innerHTML = `<p class="good">¡Expediente guardado exitosamente en el sistema! N.º ${datosPaciente.expediente}</p>`;
+  btnEnviarMedico.removeAttribute('disabled');
+  expedienteGuardadoExitosamente = true;
+});
+
+btnEnviarMedico.addEventListener('click', () => {
+  if (!expedienteGuardadoExitosamente) return;
+  const expNum = document.getElementById('expediente').value;
+  window.location.href = `ventana3.html?expediente=${encodeURIComponent(expNum)}`;
+});
+
+document.getElementById('btn-limpiar').addEventListener('click', () => {
+  form.reset();
+  resultadoGuardado.innerHTML = '';
+  btnEnviarMedico.setAttribute('disabled', 'true');
+  expedienteGuardadoExitosamente = false;
+  const anioActual = new Date().getFullYear();
+  const aleatorio = Math.floor(10000 + Math.random() * 90000);
+  document.getElementById('expediente').value = `EXP-${anioActual}-${aleatorio}`;
+});
+</script>
+
+</body>
+</html>

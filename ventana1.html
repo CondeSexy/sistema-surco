@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ventana 1 – Identificar paciente</title>
+<style>
+:root {
+  --bg: #f3f6f7;
+  --card: #fff;
+  --ink: #16292d;
+  --mut: #5a6d72;
+  --pri: #0f5c63;
+  --pri2: #e0f0f1;
+  --line: #cfdadd;
+  --warn: #a35a00;
+  --err: #b3261e;
+  --ok: #1b6e3c;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 "Segoe UI", Roboto, Arial, sans-serif;
+}
+header, main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+h1 {
+  font-size: 1.7rem;
+  margin: 0 0 4px;
+}
+p.sub {
+  color: var(--mut);
+  margin: 0 0 12px;
+}
+.win {
+  background: var(--card);
+  border: 2px solid var(--pri);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.bar {
+  background: var(--pri);
+  color: #fff;
+  padding: 8px 14px;
+  display: flex;
+  justify-content: space-between;
+  font-size: .9rem;
+}
+.body {
+  padding: 18px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+label {
+  display: block;
+  font-size: .85rem;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #8aa0a5;
+  border-radius: 4px;
+  font: inherit;
+  background: #fff;
+}
+input:focus, select:focus, textarea:focus, button:focus-visible {
+  outline: 3px solid #f2b705;
+  outline-offset: 1px;
+}
+input[readonly] {
+  background: var(--pri2);
+}
+.hint {
+  font-size: .78rem;
+  color: var(--mut);
+  margin-top: 2px;
+}
+.msg {
+  font-size: .85rem;
+  min-height: 1.1em;
+  margin-top: 6px;
+  font-weight: 600;
+}
+.bad {
+  color: var(--err);
+}
+.good {
+  color: var(--ok);
+}
+input.invalid {
+  border-color: var(--err);
+  border-width: 2px;
+}
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin: 14px 0 0;
+  padding: 10px 14px;
+}
+legend {
+  font-weight: 700;
+  color: var(--pri);
+  padding: 0 6px;
+  font-size: .9rem;
+}
+.opts label {
+  display: inline-block;
+  font-weight: 400;
+  margin-right: 16px;
+}
+.opts input {
+  width: auto;
+}
+.btns {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+button {
+  padding: 9px 18px;
+  border-radius: 4px;
+  border: 2px solid var(--pri);
+  background: var(--pri);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+button.sec {
+  background: #fff;
+  color: var(--pri);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: .85rem;
+  margin-top: 14px;
+}
+th, td {
+  border: 1px solid var(--line);
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: var(--pri2);
+}
+.scroll {
+  overflow-x: auto;
+}
+.nav-back {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--pri);
+  text-decoration: none;
+  font-weight: 600;
+}
+/* Estilos unificados para el Encabezado Institucional */
+.header-institucional {
+  background: #ffffff;
+  border-bottom: 3px solid #0f5c63;
+  padding: 15px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(15, 92, 99, 0.08);
+}
+.header-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.header-logo-container img {
+  height: 55px; /* Ajusta el tamaño de tu logo.png */
+  width: auto;
+}
+.header-titles h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #0f5c63;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.header-titles p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: #5a6d72;
+}
+.header-right {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #5a6d72;
+}
+</style>
+</head>
+<body>
+
+  <header class="header-institucional">
+  <div class="header-logo-container">
+    <!-- Asegúrate de que el archivo se llame logo.png en tu carpeta -->
+    <img src="logo.png" alt="Logo Institucional MINSA / SURCO">
+    <div class="header-titles">
+      <h2>REPÚBLICA DE PANAMÁ – MINISTERIO DE SALUD</h2>
+      <p>Sistema Único de Referencia y Contrarreferencia (SURCO)</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <span>Módulo Clínico Oficial</span><br>
+    <strong style="color: #0f5c63;">Panamá, 2026</strong>
+  </div>
+</header>
+
+<header>
+  <a class="nav-back" href="index.html">← Volver al Menú Principal</a>
+  <h1>Ventana 1 – Identificar paciente (entrada)</h1>
+  <p class="sub">Usuario: recepcionista. Decide si el paciente es nuevo o si se busca su expediente por cédula.</p>
+</header>
+<main>
+<div class="win">
+  <div class="bar">
+    <span>Consultorio Médico – Recepción</span>
+    <span>Usuario: Recepcionista</span>
+  </div>
+  <div class="body">
+    
+    <fieldset class="opts">
+      <legend>¿Es la primera vez que se atiende?</legend>
+      <label><input type="radio" name="pv" id="radio-si" checked> Sí, primera vez</label>
+      <label><input type="radio" name="pv" id="radio-no"> No, ya es paciente</label>
+    </fieldset>
+
+    <div class="grid" style="margin-top:14px">
+      <div>
+        <label for="ced">Cédula *</label>
+        <input id="ced" maxlength="13" placeholder="Ej.: 8-123-456" autocomplete="off">
+        <div class="hint">Formato: provincia-tomo-asiento (ej. 8-123-456)</div>
+        <div class="msg" id="ced-m" role="alert"></div>
+      </div>
+      <div>
+        <label for="exp">N.º de expediente</label>
+        <input id="exp" value="" readonly placeholder="Se genera o autocompleta">
+        <div class="hint">Número asignado por el sistema</div>
+      </div>
+    </div>
+
+    <div class="btns">
+      <button type="button" id="btn-buscar">Buscar expediente</button>
+      <button type="button" class="sec" id="btn-nuevo">Crear expediente nuevo</button>
+      <button type="button" class="sec" id="btn-limpiar">Limpiar</button>
+    </div>
+
+    <!-- Contenedor para los mensajes de éxito o error dinámicos -->
+    <div id="resultado-msg" style="margin-top:14px;"></div>
+
+  </div>
+</div>
+
+<div class="scroll">
+  <table>
+    <tr>
+      <th>Campo</th>
+      <th>Tipo</th>
+      <th>Tamaño</th>
+      <th>Control</th>
+      <th>Validación</th>
+    </tr>
+    <tr>
+      <td>Primera vez</td>
+      <td>Lógico</td>
+      <td>1</td>
+      <td>Grupo de opciones (radio)</td>
+      <td>Obligatorio; si «Sí» se habilita creación, si «No» busca expediente</td>
+    </tr>
+    <tr>
+      <td>Cédula</td>
+      <td>Alfanumérico</td>
+      <td>13</td>
+      <td>Caja de texto</td>
+      <td>Obligatoria; formato con guiones; se verifica en tiempo real</td>
+    </tr>
+    <tr>
+      <td>N.º expediente</td>
+      <td>Alfanumérico</td>
+      <td>14</td>
+      <td>Texto de solo lectura</td>
+      <td>Generado por el sistema o recuperado de la base de datos</td>
+    </tr>
+  </table>
+</div>
+</main>
+
+<script>
+// Referencias a los elementos del DOM
+const inputCedula = document.getElementById('ced');
+const inputExpediente = document.getElementById('exp');
+const msgValidacion = document.getElementById('ced-m');
+const resultadoMsg = document.getElementById('resultado-msg');
+const radioSi = document.getElementById('radio-si');
+const radioNo = document.getElementById('radio-no');
+
+const btnBuscar = document.getElementById('btn-buscar');
+const btnNuevo = document.getElementById('btn-nuevo');
+const btnLimpiar = document.getElementById('btn-limpiar');
+
+// Expresión regular para validar formato de cédula panameña
+const reCedula = /^(\d{1,2}|PE|E|N|[1-9](AV|PI)?)-\d{1,4}-\d{1,6}$/i;
+
+// 1. Validación en tiempo real al escribir la cédula
+inputCedula.addEventListener('input', () => {
+  const v = inputCedula.value.trim();
+  if (!v) {
+    msgValidacion.textContent = '';
+    msgValidacion.className = 'msg';
+    inputCedula.classList.remove('invalid');
+    return;
+  }
+  if (reCedula.test(v)) {
+    msgValidacion.textContent = 'Formato de cédula válido.';
+    msgValidacion.className = 'msg good';
+    inputCedula.classList.remove('invalid');
+  } else {
+    msgValidacion.textContent = 'La cédula debe tener el formato 8-123-456.';
+    msgValidacion.className = 'msg bad';
+    inputCedula.classList.add('invalid');
+  }
+});
+
+// 2. Funcionalidad del botón "Buscar expediente" (Simula base de datos)
+btnBuscar.addEventListener('click', () => {
+  const ced = inputCedula.value.trim();
+  
+  if (!ced || !reCedula.test(ced)) {
+    resultadoMsg.innerHTML = '<p class="msg bad">Por favor ingrese una cédula válida antes de buscar.</p>';
+    return;
+  }
+
+  // Simulación: Simulamos que la cédula "8-123-456" ya existe, y las demás no.
+  if (ced === '8-123-456' || radioNo.checked) {
+    inputExpediente.value = 'EXP-2026-00318';
+    resultadoMsg.innerHTML = `<p class="msg good">¡Expediente encontrado! (EXP-2026-00318). Indique al paciente que espere en la sala y envíelo al médico.</p>`;
+  } else {
+    inputExpediente.value = '';
+    resultadoMsg.innerHTML = `<p class="msg bad">No se encontró la cédula ${ced}. Verifique el número o haga clic en "Crear expediente nuevo".</p>`;
+  }
+});
+
+// 3. Funcionalidad del botón "Crear expediente nuevo"
+btnNuevo.addEventListener('click', () => {
+  const ced = inputCedula.value.trim();
+  if (!ced || !reCedula.test(ced)) {
+    resultadoMsg.innerHTML = '<p class="msg bad">Ingrese una cédula válida para poder crearle un expediente nuevo.</p>';
+    return;
+  }
+  // Redirige a la Ventana 2 simulando el paso de datos (puedes adaptarlo a ventana2.html)
+  alert(`Cédula ${ced} verificada. Redirigiendo al formulario de nuevo expediente (Ventana 2)...`);
+  window.location.href = `ventana2.html?cedula=${encodeURIComponent(ced)}`;
+});
+
+// 4. Funcionalidad del botón "Limpiar"
+btnLimpiar.addEventListener('click', () => {
+  inputCedula.value = '';
+  inputExpediente.value = '';
+  msgValidacion.textContent = '';
+  resultadoMsg.innerHTML = '';
+  inputCedula.classList.remove('invalid');
+  radioSi.checked = true;
+});
+</script>
+</body>
+</html>

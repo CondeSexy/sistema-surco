@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bienvenida – Sistema de Consultorio Médico</title>
+<style>
+:root {
+  --bg: #f3f6f7;
+  --card: #fff;
+  --ink: #16292d;
+  --mut: #5a6d72;
+  --pri: #0f5c63;
+  --pri2: #e0f0f1;
+  --line: #cfdadd;
+  --err: #b3261e;
+  --ok: #1b6e3c;
+  --shadow: 0 4px 12px rgba(15, 92, 99, 0.08);
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 "Segoe UI", Roboto, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+header {
+  background: #ffffff;
+  color: var(--ink);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--line);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brand-logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+.brand-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--pri);
+  margin: 0;
+  line-height: 1.2;
+}
+.brand-subtitle {
+  font-size: 0.78rem;
+  color: var(--mut);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.user-badge {
+  background: var(--pri2);
+  color: var(--pri);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid var(--line);
+}
+main {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 20px;
+  flex: 1;
+}
+.welcome-banner {
+  background: linear-gradient(135deg, var(--pri), #147b85);
+  color: #fff;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.welcome-banner h1 {
+  font-size: 1.8rem;
+  margin: 0 0 8px;
+}
+.welcome-banner p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 1rem;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin: 0 0 20px;
+  padding: 14px;
+}
+legend {
+  font-weight: 700;
+  color: var(--pri);
+  padding: 0 6px;
+  font-size: 1rem;
+}
+.opts {
+  display: flex;
+  gap: 24px;
+  margin-top: 8px;
+}
+.opts label {
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .opts { flex-direction: column; gap: 10px; }
+}
+label {
+  display: block;
+  font-size: .85rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #8aa0a5;
+  border-radius: 4px;
+  font: inherit;
+  background: #fff;
+}
+input:focus, button:focus-visible {
+  outline: 3px solid #f2b705;
+  outline-offset: 1px;
+}
+input[readonly] {
+  background: var(--pri2);
+  font-weight: bold;
+  color: var(--pri);
+}
+.hint {
+  font-size: .78rem;
+  color: var(--mut);
+  margin-top: 3px;
+}
+.msg {
+  font-size: .9rem;
+  margin-top: 10px;
+  font-weight: 600;
+}
+.bad { color: var(--err); }
+.good { color: var(--ok); }
+
+.btns {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+button {
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: 2px solid var(--pri);
+  background: var(--pri);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+button.sec {
+  background: #fff;
+  color: var(--pri);
+}
+button:hover {
+  opacity: 0.95;
+}
+.hidden {
+  display: none;
+}
+.links-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+.links-footer a {
+  color: var(--pri);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.links-footer a:hover {
+  text-decoration: underline;
+}
+footer {
+  text-align: center;
+  padding: 16px;
+  color: var(--mut);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--line);
+  background: var(--card);
+}
+</style>
+</head>
+<body>
+
+  <!-- BLOQUE FLOTANTE DE ACCESO RÁPIDO A EXPEDIENTES -->
+<div id="flotante-expedientes" style="
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #0f5c63;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 9999;
+  text-decoration: none;
+  transition: transform 0.2s, background 0.2s;
+" onmouseover="this.style.transform='scale(1.05)'; this.style.background='#126e77';" onmouseout="this.style.transform='scale(1)'; this.style.background='#0f5c63';">
+  <a href="generar_surco.html" style="color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+    <span style="font-size: 18px;">📁</span>
+    <span>Ver Expedientes / Archivos</span>
+  </a>
+</div>
+
+<header>
+  <div class="brand-container">
+    <!-- Asegúrate de guardar la imagen como 'logo.png' en la misma carpeta -->
+    <img src="logo.png" alt="Logo Consultorio Médico" class="brand-logo">
+    <div>
+      <p class="brand-title">Consultorio Médico</p>
+      <p class="brand-subtitle">Sistema de Gestión y Recepción</p>
+    </div>
+  </div>
+  <div class="user-badge" id="saludo-hora">Cargando horario...</div>
+</header>
+
+<main>
+  <div class="welcome-banner">
+    <h1>Bienvenido/a a Recepción</h1>
+    <p>Indique el estado del paciente para gestionar su ingreso al consultorio.</p>
+  </div>
+
+  <div class="card">
+    <fieldset>
+      <legend>¿El paciente ya se encuentra registrado?</legend>
+      <div class="opts">
+        <label><input type="radio" name="estado_paciente" id="radio-registrado" checked> Sí, ya está registrado</label>
+        <label><input type="radio" name="estado_paciente" id="radio-nuevo"> No, es primera vez (Nuevo)</label>
+      </div>
+    </fieldset>
+
+    <!-- SECCIÓN SI ESTÁ REGISTRADO -->
+    <div id="seccion-registrado">
+      <div class="grid">
+        <div>
+          <label for="cedula-buscar">Cédula del Paciente *</label>
+          <input id="cedula-buscar" maxlength="13" placeholder="Ej.: 8-123-456" autocomplete="off">
+          <div class="hint">Escriba la cédula para autocompletar el expediente</div>
+        </div>
+        <div>
+          <label for="expediente-encontrado">N.º de Expediente</label>
+          <input id="expediente-encontrado" readonly placeholder="Se autocompletará aquí">
+          <div class="hint">Recuperado del sistema del consultorio</div>
+        </div>
+      </div>
+      
+      <div id="mensaje-busqueda"></div>
+
+      <div class="btns">
+        <button type="button" id="btn-enviar-consulta" class="sec" disabled>Enviar a Sala de Espera (Consulta) →</button>
+        <button type="button" id="btn-limpiar-reg" class="sec">Limpiar</button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN SI ES NUEVO -->
+    <div id="seccion-nuevo" class="hidden">
+      <p style="margin-top: 0; color: var(--mut);">El paciente no cuenta con un historial médico previo en el sistema. Debe proceder a registrar sus datos personales para generarle un número de expediente nuevo.</p>
+      
+      <div class="btns">
+        <button type="button" id="btn-ir-registro">Ir al Formulario de Registro (Ventana 2)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="links-footer">
+    <a href="ventana3.html">Ir al Módulo Médico (Consulta) →</a> | 
+    <a href="ventana4.html">Ver Cola de Espera y Reportes →</a>
+  </div>
+</main>
+
+<footer>
+  Sistema de Consultorio Médico · Análisis y Diseño de Sistemas
+</footer>
+
+<script>
+// Saludo dinámico por horario
+const d = new Date();
+const hora = d.getHours();
+let saludo = "Buen día";
+if (hora >= 12 && hora < 19) saludo = "Buenas tardes";
+else if (hora >= 19 || hora < 5) saludo = "Buenas noches";
+document.getElementById('saludo-hora').textContent = `${saludo}, Recepción`;
+
+// Elementos de la interfaz
+const radioRegistrado = document.getElementById('radio-registrado');
+const radioNuevo = document.getElementById('radio-nuevo');
+const seccionRegistrado = document.getElementById('seccion-registrado');
+const seccionNuevo = document.getElementById('seccion-nuevo');
+
+const inputCedula = document.getElementById('cedula-buscar');
+const inputExpediente = document.getElementById('expediente-encontrado');
+const mensajeBusqueda = document.getElementById('mensaje-busqueda');
+
+const btnEnviarConsulta = document.getElementById('btn-enviar-consulta');
+const btnLimpiarReg = document.getElementById('btn-limpiar-reg');
+const btnIrRegistro = document.getElementById('btn-ir-registro');
+
+// Cambiar vistas según los botones de radio
+radioRegistrado.addEventListener('change', () => {
+  if (radioRegistrado.checked) {
+    seccionRegistrado.classList.remove('hidden');
+    seccionNuevo.classList.add('hidden');
+    mensajeBusqueda.innerHTML = '';
+  }
+});
+
+radioNuevo.addEventListener('change', () => {
+  if (radioNuevo.checked) {
+    seccionNuevo.classList.remove('hidden');
+    seccionRegistrado.classList.add('hidden');
+  }
+});
+
+// Búsqueda automática en tiempo real mientras el usuario escribe la cédula
+inputCedula.addEventListener('input', () => {
+  const cedIngresada = inputCedula.value.trim();
+  inputExpediente.value = '';
+  mensajeBusqueda.innerHTML = '';
+  btnEnviarConsulta.setAttribute('disabled', 'true');
+
+  if (cedIngresada.length < 5) return;
+
+  let pacienteEncontrado = null;
+  const listaLocal = JSON.parse(localStorage.getItem('pacientes_consultorio') || '[]');
+  pacienteEncontrado = listaLocal.find(p => p.cedula.toLowerCase() === cedIngresada.toLowerCase());
+
+  if (pacienteEncontrado) {
+    inputExpediente.value = pacienteEncontrado.expediente;
+    mensajeBusqueda.innerHTML = `<p class="good">¡Paciente encontrado: <strong>${pacienteEncontrado.nombre}</strong>! Expediente autocompletado.</p>`;
+    btnEnviarConsulta.removeAttribute('disabled');
+  } else {
+    fetch('pacientes.json')
+      .then(res => res.json())
+      .then(data => {
+        const match = data.find(p => p.cedula.toLowerCase() === cedIngresada.toLowerCase());
+        if (match) {
+          inputExpediente.value = match.expediente;
+          mensajeBusqueda.innerHTML = `<p class="good">¡Paciente encontrado: <strong>${match.nombre}</strong>! Expediente autocompletado.</p>`;
+          btnEnviarConsulta.removeAttribute('disabled');
+        } else {
+          mensajeBusqueda.innerHTML = `<p class="bad">No se encontró ningún expediente con esta cédula.</p>`;
+        }
+      })
+      .catch(() => {
+        mensajeBusqueda.innerHTML = `<p class="bad">No se encontró la cédula "${cedIngresada}" en el sistema.</p>`;
+      });
+  }
+});
+
+btnEnviarConsulta.addEventListener('click', () => {
+  const exp = inputExpediente.value;
+  if (!exp) return;
+  alert(`Paciente con expediente ${exp} enviado exitosamente a la consulta médica.`);
+  window.location.href = `ventana3.html?expediente=${encodeURIComponent(exp)}`;
+});
+
+btnLimpiarReg.addEventListener('click', () => {
+  inputCedula.value = '';
+  inputExpediente.value = '';
+  mensajeBusqueda.innerHTML = '';
+  btnEnviarConsulta.setAttribute('disabled', 'true');
+});
+
+btnIrRegistro.addEventListener('click', () => {
+  window.location.href = 'ventana2.html';
+});
+</script>
+
+</body>
+</html>
